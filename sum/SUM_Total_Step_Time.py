@@ -36,7 +36,8 @@ def read_console_file(filename):
                 line_field_time = line_fix_spaces.split(' ')[2]
                 line_field_action = line_fix_spaces.split(' ')[3]
                 line_field_phase = line_fix_spaces.split(' ')[4]
-                data.append([line_field_date, line_field_time, line_field_action, line_field_phase])
+                data.append([line_field_date, line_field_time,
+                            line_field_action, line_field_phase])
     return data
 
 
@@ -75,12 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# Clean Up Regex
-# grep -E "<<|>>" SAPupConsole.log
-# | sed -e "s/START OF PHASE/S/g"
-# | sed -e "s/END OF PHASE  /E/g"
-# | sed -e "s/  */ /g"
-# | cut -d ' ' -f2,3,4,5
-# | sed -e "s/ /;/g"
-# > SAPupConsole_log.csv
