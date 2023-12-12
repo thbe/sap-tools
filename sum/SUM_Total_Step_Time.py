@@ -14,7 +14,6 @@ Purpose:      Get summarized times per SUM upgrade phase/ step
 """
 
 import re
-import io
 import datetime
 from prettytable import PrettyTable
 
