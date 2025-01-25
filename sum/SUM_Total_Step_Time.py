@@ -10,14 +10,20 @@ ChangeLog:    v0.1.0 - Initial release
               v1.0.0 - Validated against S01 S4HANA upgrade
               v1.2.0 - Switched to direct SAPupConsole.log processing
               v2.0.0 - Refactor into class
+              v2.0.1 - Switch to input file as a parameter
 
 Purpose:      Get summarized times per SUM upgrade phase/ step
 """
 
 import re
+import sys
 import datetime
 from prettytable import PrettyTable
 
+
+if len(sys.argv) != 2:
+    print(f"Usage: {sys.argv[0]} <filename>")
+    sys.exit(1)
 
 class Sum:
     '''
@@ -35,8 +41,7 @@ class Sum:
 
     def read_log_file(self):
         """Reads the SAPupConsole.log file and returns a list of lists."""
-        filename = 'SAPupConsole.log'
-        with open(filename, 'r') as fp:
+        with open(sys.argv[1], "r", encoding="utf-8") as fp:
             Lines = fp.readlines()
             timestamp_pattern = r'^<<|^>>'
             for line in Lines:
@@ -52,7 +57,7 @@ class Sum:
                     line_field_action = line_fix_spaces.split(' ')[3]
                     line_field_phase = line_fix_spaces.split(' ')[4]
                     self.data_raw.append([line_field_date, line_field_time,
-                                 line_field_action, line_field_phase])
+                                          line_field_action, line_field_phase])
 
     def analyze_phase_times(self):
         """Gets the total time consumed by each phase."""
